@@ -11,7 +11,7 @@ pipeline{
     }
     stage('build and push'){
       steps{
-        sh(script: 'docker build -t siadevops/nopcoommerce:latest .'),
+        sh(script: 'docker build -t siadevops/nopcoommerce:latest .')
         sh(script: 'docker push siadevops/nopcoommerce:latest')
       }
     }

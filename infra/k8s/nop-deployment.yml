@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nop-deployment
+  labels:
+    app: nop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nop
+  template:
+    metadata:
+      labels:
+        app: nop
+    spec:
+      containers:
+        - name: nop-container
+          image: siadevops/nopcoommerce:latest
+          resources:
+            limits:
+              cpu: "1000m"
+              memory: "512Mi"
+          ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  nginx-svc
+spec:
+  selector:
+    app:  nop
+  type:  LoadBalancer
+  ports:
+  - name:  nop-svc-port
+    port: 80
+    targetPort: 80
+

@@ -32,7 +32,7 @@ metadata:
 spec:
   selector:
     app:  nop
-  type:  LoadBalancer
+  type:  NodePort
   ports:
   - name:  nop-svc-port
     port: 80

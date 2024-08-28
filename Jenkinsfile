@@ -20,6 +20,12 @@ pipeline{
       sh(script: 'cd infra/Terraform && ls -al && pwd && terraform init && terraform workspace select dev && terraform apply -lock=false -var-file="dev.tfvars" -var "build_number=${BUILD_ID}" -auto-approve')
      }    
     }
+       stage('cleanup') {
+            steps {
+                // Example command to destroy Terraform-managed resources
+                sh(script: 'cd infra/Terraform && terraform destroy -lock=false -var-file="dev.tfvars" -var "build_number=${BUILD_ID}" -auto-approve')
+            }
+        }
     stage('k8s deploy'){
       steps{
         sh(script: 'kubectl apply -f infra/k8s')

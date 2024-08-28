@@ -6,7 +6,7 @@ pipeline{
     stage('git'){
       steps{
         git branch: 'develop',
-            url: 'https://github.com/WorkShopBysiadevops/Terraform-June24.git'
+            url: 'https://github.com/WorkShopBysiadevops/nopCommerce.git'
       }
     }
     stage('build and push'){

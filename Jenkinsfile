@@ -17,7 +17,7 @@ pipeline{
     }
     stage(infraprovisioning){
      steps{
-      sh(script: 'cd infra/Terraform && ls -al && pwd && terraform init && terraform workspace new dev && terraform workspace select dev && terraform apply -lock=false -var-file="dev.tfvars" -var "build_number=${BUILD_ID}" -auto-approve')
+      sh(script: 'cd infra/Terraform && ls -al && pwd && terraform init && terraform workspace select dev && terraform apply -lock=false -var-file="dev.tfvars" -var "build_number=${BUILD_ID}" -auto-approve')
      }    
     }
     stage('k8s deploy'){

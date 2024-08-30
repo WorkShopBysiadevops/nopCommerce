@@ -1,1 +1,35 @@
-test
+pool:
+  vmImage: ubuntu-latest
+triggers:
+  - none
+name: nopcommerce-project-pipeline
+stages:
+  - stage: build and push
+    displayName: build and push using docker
+    jobs:
+      - job: build
+        steps:
+          - task: Docker@2
+            displayName: docker build and push
+            inputs:
+              command: buildAndPush
+              containerRegistry: MyDockerHub
+              repository: siadevops/nopcoommerce
+              tags: 3.0
+  - stage: devenv
+    displayName: terrafrom and k8s
+    jobs:
+      - job: terraform and k8s
+        steps:
+          - task: Bash@3
+            displayName: Execute terraform
+            inputs:
+              targetType: 'inline'
+              script: 'terraform init && terraform apply -auto-approve'
+              workingDirectory: infra/Terraform
+          - task: Bash@3
+            displayName: Execute k8s
+            inputs: 
+            targetType: inline
+            script: 'kubectl apply -f .'
+            workingDirectory: infra/k8s
